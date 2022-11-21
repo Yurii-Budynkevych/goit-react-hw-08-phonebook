@@ -4,7 +4,7 @@ import './Filter.css';
 const Filter = ({ value, onFilter }) => {
   return (
     <label>
-      Find contacts by name
+      Find contacts by name{' '}
       <input type="text" value={value} onChange={onFilter} />
     </label>
   );
