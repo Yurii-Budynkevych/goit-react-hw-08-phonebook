@@ -1,14 +1,18 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Item.css';
-import { del } from 'redux/contactsSlice';
+import { delContactOperation } from 'redux/operations/contactsOperations';
 
 const ListItem = ({ name, value, id }) => {
   const dispatch = useDispatch();
   return (
     <li>
       {name}: {value}
-      <button type="button" onClick={() => dispatch(del(id))} className="btn">
+      <button
+        type="button"
+        onClick={() => dispatch(delContactOperation(id))}
+        className="btn"
+      >
         Delete
       </button>
     </li>

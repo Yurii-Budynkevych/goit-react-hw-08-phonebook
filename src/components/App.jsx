@@ -5,7 +5,6 @@ import ContactForm from './Form/Form';
 import ContactList from './Contacts/Contacts';
 import Filter from './Filter/Filter';
 import { filterSliseReducer } from 'redux/filterSlice';
-import { sub } from 'redux/contactsSlice';
 import {
   addContactOperation,
   fetchContactsOperation,
@@ -34,9 +33,9 @@ export const App = () => {
     contact.name.toLowerCase().includes(normalizedFilter)
   );
 
-  // useEffect(() => {
-  //   dispatch(fetchContactsOperation());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContactsOperation());
+  }, [dispatch]);
   return (
     <>
       <h1 className="title">Phonebook</h1>

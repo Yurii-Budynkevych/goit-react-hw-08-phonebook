@@ -24,3 +24,15 @@ export const addContactOperation = createAsyncThunk(
     }
   }
 );
+
+export const delContactOperation = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, thunkApi) => {
+    try {
+      await deleteContact(id);
+      return id;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);

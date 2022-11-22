@@ -2,19 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchContactsOperation,
   addContactOperation,
+  delContactOperation,
 } from './operations/contactsOperations';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: { isLoading: false, error: null, items: [] },
-  reducers: {
-    sub(state, action) {
-      state.items.push(action.payload);
-    },
-    del(state, action) {
-      return state.items.filter(contact => contact.id !== action.payload);
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchContactsOperation.pending]: state => {
       state.isLoading = true;
@@ -22,12 +16,13 @@ export const contactsSlice = createSlice({
     [fetchContactsOperation.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.error = null;
-      state.items.push(payload);
+      state.items = payload;
     },
     [fetchContactsOperation.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
     },
+    // ____________________________________________________________________________________
     [addContactOperation.pending]: state => {
       state.isLoading = true;
     },
@@ -40,8 +35,18 @@ export const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    // ____________________________________________________________________________________
+    [delContactOperation.pending]: state => {
+      state.isLoading = true;
+    },
+    [delContactOperation.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = null;
+      state.items = state.items.filter(contact => contact.id !== payload);
+    },
+    [delContactOperation.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
   },
 });
-
-// actions
-export const { sub, del } = contactsSlice.actions;
