@@ -1,15 +1,20 @@
 import { Formik, Form, Field } from 'formik';
-import PropTypes from 'prop-types';
-import './Form.css';
 
 const init = {
   name: '',
-  phone: '',
+  email: '',
+  password: '',
 };
 
-const ContactForm = ({ onSubmit }) => {
+const RegisterPage = () => {
+  const onSubmit = (values, { resetForm }) => {
+    console.log(values);
+    resetForm();
+  };
+
   return (
     <>
+      <h1 className="title">Create an account</h1>
       <Formik initialValues={init} onSubmit={onSubmit}>
         <Form className="form" autoComplete="off">
           <label>
@@ -23,25 +28,17 @@ const ContactForm = ({ onSubmit }) => {
             />
           </label>
           <label>
-            Number{' '}
-            <Field
-              type="tel"
-              name="phone"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-            />
+            E-mail <Field type="email" name="email" required />
+          </label>
+          <label>
+            Password <Field type="text" name="password" required />
           </label>
           <button className="btn" type="sumbit">
-            Add contact
+            Register
           </button>
         </Form>
       </Formik>
     </>
   );
 };
-export default ContactForm;
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+export default RegisterPage;

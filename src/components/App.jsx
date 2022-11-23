@@ -1,48 +1,23 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import Header from './Header/Header';
 import './App.css';
-import ContactForm from './Form/Form';
-import ContactList from './Contacts/Contacts';
-import Filter from './Filter/Filter';
-import { filterSliseReducer } from 'redux/filterSlice';
-import {
-  addContactOperation,
-  fetchContactsOperation,
-} from 'redux/operations/contactsOperations';
 
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 export const App = () => {
-  const dispatch = useDispatch();
-  const filterValue = useSelector(state => state.filter);
-  const loader = useSelector(state => state.contacts.isLoading);
-  const contactsValue = useSelector(state => state.contacts.items);
-
-  const submitHandler = (values, { resetForm }) => {
-    if (contactsValue.some(obj => obj.name === values.name)) {
-      resetForm();
-      return window.alert(`${values.name} is already in contacts`);
-    }
-    dispatch(addContactOperation(values));
-    resetForm();
-  };
-
-  const filterHandler = e => {
-    dispatch(filterSliseReducer(e.target.value));
-  };
-  const normalizedFilter = filterValue.toLowerCase();
-  const visibleContacts = contactsValue.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
-
-  useEffect(() => {
-    dispatch(fetchContactsOperation());
-  }, [dispatch]);
   return (
     <>
-      <h1 className="title">Phonebook</h1>
-      <ContactForm onSubmit={submitHandler} />
-      <h2 className="subtitle">Contacts</h2>
-      <Filter value={filterValue} onFilter={filterHandler} />
-      {loader ? <h2>Loading...</h2> : <ContactList arr={visibleContacts} />}
+      <Header />
+      <Suspense fallback={<h2>Loading...</h2>}>
+        <Routes>
+          <Route path="/" element={<ContactsPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to={'/'} />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
