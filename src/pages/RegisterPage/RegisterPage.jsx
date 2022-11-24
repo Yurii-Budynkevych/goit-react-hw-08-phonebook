@@ -1,4 +1,6 @@
 import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/operations/authOperations';
 
 const init = {
   name: '',
@@ -7,8 +9,10 @@ const init = {
 };
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+
   const onSubmit = (values, { resetForm }) => {
-    console.log(values);
+    dispatch(register(values));
     resetForm();
   };
 
@@ -31,7 +35,14 @@ const RegisterPage = () => {
             E-mail <Field type="email" name="email" required />
           </label>
           <label>
-            Password <Field type="text" name="password" required />
+            Password{' '}
+            <Field
+              type="password"
+              name="password"
+              pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{6,}$"
+              title="At least 7 charackters: letters (latin) or numbers (0-9) or -_\. allowed"
+              required
+            />
           </label>
           <button className="btn" type="sumbit">
             Register

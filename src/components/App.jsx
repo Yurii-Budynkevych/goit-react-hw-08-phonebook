@@ -1,12 +1,17 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Header from './Header/Header';
+import { fetchCurrentUser } from 'redux/operations/authOperations';
 import './App.css';
 
 const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+
 export const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {}, [dispatch(fetchCurrentUser())]);
   return (
     <>
       <Header />
