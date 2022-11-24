@@ -4,7 +4,7 @@ import './Form.css';
 
 const init = {
   name: '',
-  phone: '',
+  number: '',
 };
 
 const ContactForm = ({ onSubmit }) => {

@@ -11,7 +11,7 @@ const init = {
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = async (values, { resetForm }) => {
     dispatch(register(values));
     resetForm();
   };
