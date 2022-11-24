@@ -11,7 +11,9 @@ const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  useEffect(() => {}, [dispatch(fetchCurrentUser())]);
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
   return (
     <>
       <Header />
