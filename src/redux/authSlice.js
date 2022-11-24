@@ -13,6 +13,7 @@ export const authSlice = createSlice({
     token: null,
     isLoggedIn: false,
     error: null,
+    isFetching: false,
   },
   extraReducers: {
     [register.pending]: (state, action) => {},
@@ -21,6 +22,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+      state.isFetching = false;
     },
     [register.rejected]: (state, { payload }) => {
       state.error = payload;
@@ -37,14 +39,18 @@ export const authSlice = createSlice({
       state.error = payload;
     },
     // _______________________________________________________
-    [fetchCurrentUser.pending]: (state, action) => {},
+    [fetchCurrentUser.pending]: (state, action) => {
+      state.isFetching = true;
+    },
     [fetchCurrentUser.fulfilled]: (state, action) => {
       state.error = null;
       state.user = action.payload;
       state.isLoggedIn = true;
+      state.isFetching = false;
     },
     [fetchCurrentUser.rejected]: (state, { payload }) => {
       state.error = payload;
+      state.isFetching = false;
     },
     // ________________________________________________________
     [logout.pending]: (state, action) => {},

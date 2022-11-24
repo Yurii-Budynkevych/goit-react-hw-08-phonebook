@@ -9,11 +9,13 @@ const Header = () => {
     <header className="nav-bar">
       <nav>
         <ul className="nav-list ">
-          <li>
-            <NavLink to={'/'} className="nav-link">
-              Contacts
-            </NavLink>
-          </li>
+          {isLoggedIn && (
+            <li>
+              <NavLink to={'/contacts'} className="nav-link">
+                Contacts
+              </NavLink>
+            </li>
+          )}
           {!isLoggedIn && (
             <li>
               <NavLink to={'/login'} className="nav-link">
